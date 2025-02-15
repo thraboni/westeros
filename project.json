@@ -1,1 +1,22 @@
-{"id":1235,"name":"testeGit","agents":[],"firmwares":[]}
+{
+  "id": 1235,
+  "name": "testeGit",
+  "agents": [
+    {
+      "archClass": "Jason",
+      "name": "jon",
+      "sourceCode": "/* Initial beliefs and rules */\n\n/* Initial goals */\n\n// Jon está sempre perguntando a Sam sobre o inverno\n+!start\n<- .send(sam, achieve, check_winter);\n\t.wait(3000);\n\t!start.\n\n// Quando recebe a resposta de Sam, exibe no console\n+winter(Status)\n<- .print(\"Jon Snow: Sam disse - \", Status).\n"
+    },
+    {
+      "archClass": "Jason",
+      "name": "sam",
+      "sourceCode": "/* Initial beliefs and rules */\r\n\r\n/* Initial goals */\r\n\r\n// Inicialmente, Sam acha que o inverno ainda não chegou\n+winter_is_not_here.\n\n// Quando Jon pergunta, Sam responde baseado na belief\n+!check_winter : winter_is_not_here\n<- .send(jon, tell, winter(\"Ainda há tempo!\"));\n\t.print(\"Sam: Não se preocupe, Jon. Ainda há tempo!\").\n\n+!check_winter : not winter_is_not_here\n<- .send(jon, tell, winter(\"O inverno chegou!\"));\n\t.print(\"Sam: Jon, é real... O inverno chegou!\").\n\n// Quando Bran avisa, Sam muda sua belief\n+winter_vision\n<- -winter_is_not_here;  // Remove a antiga belief\n\t.print(\"Sam: Bran me enviou uma visão... O inverno chegou mesmo!\").\n"
+    },
+    {
+      "archClass": "Jason",
+      "name": "bran",
+      "sourceCode": "/* Initial beliefs and rules */\r\n\r\n/* Initial goals */\r\n\r\n// Bran espera um tempo e depois avisa Samwell\n+!start_vision\n<- .wait(10000);\n\t.send(sam, tell, winter_vision);\n\t.print(\"Bran: Eu vi no futuro... O inverno chegou!\").\n"
+    }
+  ],
+  "firmwares": []
+}
